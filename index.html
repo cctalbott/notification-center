@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Notification Center</title>
+    <meta name="description" content="TTU UI Notification Center" />
+    <meta name="author" content="TTUS" />
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/notificationcenter.css?v=1.0.0" />
+</head>
+<body>
+    <div>
+        <a id="notificationcentericon" href="#">
+            <img src="images/bulb_wht_32.png" class="notify-ico" />
+        </a>
+    </div>
+    <notification-center-module></notification-center-module>
+
+    <script src="javascript/utility.js"></script>
+    <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="notification-center/notification-center-controller.js"></script>
+    <script type="module" src="notification-center/notification-center-module.js"></script>
+    <script src="javascript/site.js"></script>
+</body>
+</html>

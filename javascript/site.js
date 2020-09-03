@@ -5,9 +5,11 @@ ready(function () {
     notifIcon.addEventListener('click', function () {
         openNotificationCenterPanel();
     });
+
+    notificationCenter.addNotification();
 });
 
-var openNotificationCenterPanel = function () {
+const openNotificationCenterPanel = function () {
     const panel = document.querySelectorAll('#notificationcenterpanel')[0];
 
     if (hasClass(panel, 'hide')) {

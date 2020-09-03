@@ -1,13 +1,7 @@
-/**
- * Constants
- */
 const hostRoot = window.location.protocol + '//' + window.location.host + '/' + window.location.pathname + '/../';
 const notificationPanelSnippetUrl = hostRoot + '/notification-center/notificationcenterpanel.html';
 const moduleName = 'notification-center-module';
 
-/**
- * Methods
- */
 const getSnippet = function (reqUrl, moduleName) {
     const request = new XMLHttpRequest();
     request.open('GET', reqUrl, true);
@@ -32,9 +26,6 @@ const getSnippet = function (reqUrl, moduleName) {
     request.send();
 }
 
-/**
- * Init
- */
 ready(function () {
     getSnippet(notificationPanelSnippetUrl, moduleName);
 });

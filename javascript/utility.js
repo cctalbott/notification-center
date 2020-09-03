@@ -10,6 +10,12 @@ var hasClass = function (el, className) {
     return result;
 }
 
+var parseHTML = function (str) {
+    var tmp = document.implementation.createHTMLDocument();
+    tmp.body.innerHTML = str;
+    return tmp.body.children;
+}
+
 var ready = function (fn) {
     if (document.readyState !== 'loading') {
         fn();

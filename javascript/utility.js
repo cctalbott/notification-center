@@ -1,4 +1,21 @@
-var hasClass = function (el, className) {
+const addClass = function (el, className) {
+    if (el.classList) {
+        el.classList.add(className);
+    } else {
+        const current = el.className, found = false;
+        const all = current.split(' ');
+        for (let i = 0; i < all.length, !found; i++) { found = all[i] === className; }
+        if (!found) {
+            if (current === '') {
+                el.className = className;
+            } else {
+                el.className += ' ' + className;
+            }
+        }
+    }
+}
+
+const hasClass = function (el, className) {
     let result = false;
 
     if (el.classList) {
@@ -10,13 +27,13 @@ var hasClass = function (el, className) {
     return result;
 }
 
-var parseHTML = function (str) {
-    var tmp = document.implementation.createHTMLDocument();
+const parseHTML = function (str) {
+    const tmp = document.implementation.createHTMLDocument();
     tmp.body.innerHTML = str;
     return tmp.body.children;
 }
 
-var ready = function (fn) {
+const ready = function (fn) {
     if (document.readyState !== 'loading') {
         fn();
     } else {
@@ -24,7 +41,7 @@ var ready = function (fn) {
     }
 }
 
-var toggleClass = function (el, className) {
+const toggleClass = function (el, className) {
     if (el.classList) {
         el.classList.toggle(className);
     } else {

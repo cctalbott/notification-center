@@ -6,7 +6,7 @@ ready(function () {
         openNotificationCenterPanel();
     });
 
-    notificationCenter.addNotification();
+    notificationCenter.addNotification('success', 'Selected longevity calculation records successfully hidden.');
 });
 
 const openNotificationCenterPanel = function () {

@@ -66,6 +66,9 @@
     width: 28px;
     text-transform: uppercase;
 }
+.notifywindow .panel-title .closenotif:nth-child(2) {
+    right: 40px;
+}
 .notifcenterbox .closenotif {
     top: -10px;
     right: 0;

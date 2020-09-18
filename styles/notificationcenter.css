@@ -33,6 +33,10 @@
     transition-duration: 500ms;
     transition-timing-function: linear;
 }
+.indNotifVis {
+    right: 30px; 
+    position: relative;
+}
 .notification li .active { right: 30px; }
 .notification {
     position: relative;

@@ -1,4 +1,4 @@
-const addClass = function (el, className) {
+const addClass = (el, className) => {
     if (el.classList) {
         el.classList.add(className);
     } else {
@@ -15,7 +15,7 @@ const addClass = function (el, className) {
     }
 }
 
-const hasClass = function (el, className) {
+const hasClass = (el, className) => {
     let result = false;
 
     if (el.classList) {
@@ -27,13 +27,13 @@ const hasClass = function (el, className) {
     return result;
 }
 
-const parseHTML = function (str) {
+const parseHTML = (str) => {
     const tmp = document.implementation.createHTMLDocument();
     tmp.body.innerHTML = str;
     return tmp.body.children;
 }
 
-const ready = function (fn) {
+const ready = (fn) => {
     if (document.readyState !== 'loading') {
         fn();
     } else {
@@ -41,7 +41,7 @@ const ready = function (fn) {
     }
 }
 
-const toggleClass = function (el, className) {
+const toggleClass = (el, className) => {
     if (el.classList) {
         el.classList.toggle(className);
     } else {
@@ -57,3 +57,5 @@ const toggleClass = function (el, className) {
         el.className = classes.join(' ');
     }
 }
+
+export { addClass, hasClass, parseHTML, ready, toggleClass };

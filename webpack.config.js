@@ -8,6 +8,8 @@ module.exports = {
     entry: {
         notificationCenterModule: './src/notification-center/notification-center-module.js',
         notificationCenterController: './src/notification-center/notification-center-controller.js',
+        site: './javascript/site.js',
+        utility: './javascript/utility.js',
     },
     plugins: [
         new CleanWebpackPlugin(),

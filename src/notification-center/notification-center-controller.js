@@ -41,7 +41,11 @@ class NotificationCenterController {
         }
     };
 
-    addNotification(type, msg) {
+    addNotification = (type, msg) => {
+        this.notifications.push({
+            type: type,
+            msg: msg
+        });
         const hostRoot = window.location.protocol + '//' + window.location.host + '/' + window.location.pathname + '/../';
         const notificationBoxSnippetUrl = hostRoot + '/src/notification-center/notification-box.html';
 

@@ -1,3 +1,11 @@
+import { ready } from './utility.js';
+import { notificationCenter } from '../src/notification-center/notification-center-module.js';
+
+ready(() => {
+    notificationCenter.addNotification('success', 'A notification from site.js.');
+    notificationCenter.addNotification('success', 'A second notification from site.js.');
+});
+
 // import { hasClass, ready, toggleClass } from './utility.js';
 // import { NotificationCenterController } from '../src/notification-center/notification-center-controller.js';
 //

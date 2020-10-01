@@ -1,7 +1,7 @@
 import NotificationCenterController from './notification-center-controller.js';
 import { hasClass, ready, toggleClass } from '../../javascript/utility.js';
 
-const notificationCenter = new NotificationCenterController();
+export const notificationCenter = new NotificationCenterController();
 const hostRoot = window.location.protocol + '//' + window.location.host + '/' + window.location.pathname + '/../';
 const notificationPanelSnippetUrl = hostRoot + '/src/notification-center/notificationcenterpanel.html';
 const moduleName = 'notification-center-module';
@@ -23,7 +23,6 @@ const getSnippet = (reqUrl, moduleName) => {
             const notifIcon = document.querySelectorAll('#notificationcentericon')[0];
             notifIcon.addEventListener('click', openNotificationCenterPanel);
 
-            notificationCenter.addNotification('success', 'Selected longevity calculation records successfully hidden.');
             document.querySelectorAll('#notificationcenterbg')[0].addEventListener('click', notificationCenter.closeNotificationCenterPanel);
             const closePanelDom = document.querySelectorAll('#notificationcenterpanel .panel-heading .panel-title a.closenotif:first-child')[0];
             closePanelDom.addEventListener('click', notificationCenter.closeNotificationCenterPanel);

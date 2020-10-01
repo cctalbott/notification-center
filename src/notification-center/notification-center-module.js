@@ -1,5 +1,5 @@
 import NotificationCenterController from './notification-center-controller.js';
-import { hasClass, ready, toggleClass } from '../../javascript/utility.js';
+import { hasClass, parseHTML, ready, toggleClass } from '../../javascript/utility.js';
 
 export const notificationCenter = new NotificationCenterController();
 const hostRoot = window.location.protocol + '//' + window.location.host + '/' + window.location.pathname + '/../';
@@ -28,6 +28,10 @@ const getSnippet = (reqUrl, moduleName) => {
             closePanelDom.addEventListener('click', notificationCenter.closeNotificationCenterPanel);
             const pinPanelDom = document.querySelectorAll('#notificationcenterpanel .panel-heading .panel-title a.closenotif:last-child')[0];
             pinPanelDom.addEventListener('click', notificationCenter.togglePinned);
+
+            const notiflistHTML = parseHTML(`<ul class="notificationul indNotifs"></ul>`)[0];
+            const bodyDomEl = document.querySelectorAll('body')[0];
+            bodyDomEl.appendChild(notiflistHTML);
         } else {
             // We reached our target server, but it returned an error
 

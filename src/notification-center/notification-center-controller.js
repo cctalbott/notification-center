@@ -47,9 +47,62 @@ class NotificationCenterController {
             msg: msg
         });
         const hostRoot = window.location.protocol + '//' + window.location.host + '/' + window.location.pathname + '/../';
+        const indNotificationSnippetUrl = hostRoot + '/src/notification-center/notifications.html';
         const notificationBoxSnippetUrl = hostRoot + '/src/notification-center/notification-box.html';
 
-        const getSnippet = (reqUrl) => {
+        const getIndSnippet = (reqUrl) => {
+            const request = new XMLHttpRequest();
+            request.open('GET', reqUrl, true);
+
+            request.onload = () => {
+                if (request.status >= 200 && request.status < 400) {
+                    // Success!
+                    const resp = parseHTML(request.responseText)[0];
+                    const notiflist = document.querySelectorAll('.notificationul')[0];
+                    notiflist.appendChild(resp);
+                    const list_length = document.querySelectorAll('.notificationul li').length - 1;
+                    const notiflistitem = document.querySelectorAll('.notificationul li')[list_length];
+                    notiflistitem.setAttribute('id', 'box' + list_length.toString());
+                    const notifyheadico = document.querySelectorAll('.iconnotifimg.notify-headico')[list_length];
+                    const contentnotif = document.querySelectorAll('.contentnotif')[list_length];
+                    let notificonclass;
+                    let notifyheadicomsg;
+                    switch (type) {
+                        case 'success':
+                            notificonclass = 'notify-success';
+                            notifyheadicomsg = 's';
+                            break;
+                        case 'error':
+                            notificonclass = 'notify-error';
+                            notifyheadicomsg = 'e';
+                            break;
+                        case 'warning':
+                            notificonclass = 'notify-warning';
+                            notifyheadicomsg = 'w';
+                            break;
+                        default:
+                            notificonclass = 'notify-info';
+                            notifyheadicomsg = 'i';
+                            break;
+                    }
+                    console.log(notifyheadico);
+                    addClass(notifyheadico, notificonclass);
+                    notifyheadico.innerText = notifyheadicomsg;
+                    contentnotif.innerText = msg;
+                } else {
+                    // We reached our target server, but it returned an error
+                }
+            };
+
+            request.onerror = () => {
+                // There was a connection error of some sort
+                console.error('connection error calling '+ reqUrl +' snippet');
+            };
+
+            request.send();
+        };
+
+        const getPanelSnippet = (reqUrl) => {
             const request = new XMLHttpRequest();
             request.open('GET', reqUrl, true);
 
@@ -96,7 +149,6 @@ class NotificationCenterController {
                     centerlist.appendChild(centerlistHTML);
                     centerlist.insertBefore(centerlistHTML, centerlist.firstChild);
                     const notifHTML = `<div class="closenotif">x</div>` + msg + `<br />`;
-                    console.log(list_length);
                     const notifcenterbox = document.querySelectorAll('.notifcenterbox')[list_length];
                     notifcenterbox.innerHTML = notifHTML;
                 } else {
@@ -112,7 +164,8 @@ class NotificationCenterController {
             request.send();
         };
 
-        getSnippet(notificationBoxSnippetUrl);
+        getIndSnippet(indNotificationSnippetUrl);
+        getPanelSnippet(notificationBoxSnippetUrl);
     }
 }
 

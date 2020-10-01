@@ -89,6 +89,7 @@ class NotificationCenterController {
                     addClass(notifyheadico, notificonclass);
                     notifyheadico.innerText = notifyheadicomsg;
                     contentnotif.innerText = msg;
+                    window.setTimeout(this.removeItem(notiflistitem), 10000);
                 } else {
                     // We reached our target server, but it returned an error
                 }
@@ -166,6 +167,15 @@ class NotificationCenterController {
 
         getIndSnippet(indNotificationSnippetUrl);
         getPanelSnippet(notificationBoxSnippetUrl);
+    }
+
+    removeItem(itemDomEl) {
+        if (hasClass(itemDomEl, 'fade-in')) {
+            toggleClass(itemDomEl, 'fade-in');
+            if (!hasClass(itemDomEl, 'fade-out')) {
+                addClass(itemDomEl, 'fade-out');
+            }
+        }
     }
 }
 

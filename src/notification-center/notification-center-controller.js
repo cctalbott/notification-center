@@ -59,7 +59,9 @@ class NotificationCenterController {
                     const resp = parseHTML(request.responseText)[0];
                     const panel = document.querySelectorAll('#notificationcenterpanel')[0];
                     panel.appendChild(resp);
-                    const centerlist = document.querySelectorAll('.centerlist')[0];
+                    const list_length = document.querySelectorAll('.centerlist').length - 1;
+                    const centerlist = document.querySelectorAll('.centerlist')[list_length];
+                    addClass(centerlist, 'item' + list_length.toString());
                     let centerlistclass;
                     let notifyclass;
                     let notifyheadico;
@@ -87,16 +89,15 @@ class NotificationCenterController {
                             break;
                     }
                     addClass(centerlist, centerlistclass);
-                    let centerlistHTML;
-                    const centerlistHTMLsuccess = parseHTML(`
+                    const centerlistHTML = parseHTML(`
                         <div class="` + notifyclass + `">
                             <span class="notify-headico">` + notifyheadico + `</span>` + notifytypemsg + `
                         </div>`)[0];
-                    centerlistHTML = centerlistHTMLsuccess;
                     centerlist.appendChild(centerlistHTML);
                     centerlist.insertBefore(centerlistHTML, centerlist.firstChild);
                     const notifHTML = `<div class="closenotif">x</div>` + msg + `<br />`;
-                    const notifcenterbox = document.querySelectorAll('.notifcenterbox')[0];
+                    console.log(list_length);
+                    const notifcenterbox = document.querySelectorAll('.notifcenterbox')[list_length];
                     notifcenterbox.innerHTML = notifHTML;
                 } else {
                     // We reached our target server, but it returned an error

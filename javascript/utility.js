@@ -41,6 +41,14 @@ const ready = (fn) => {
     }
 }
 
+const removeEventListener = (el, eventName, handler) => {
+    if (el.removeEventListener) {
+        el.removeEventListener(eventName, handler);
+    } else {
+        el.detachEvent('on' + eventName, handler);
+    }
+}
+
 const toggleClass = (el, className) => {
     if (el.classList) {
         el.classList.toggle(className);
@@ -58,4 +66,4 @@ const toggleClass = (el, className) => {
     }
 }
 
-export { addClass, hasClass, parseHTML, ready, toggleClass };
+export { addClass, hasClass, parseHTML, ready, removeEventListener, toggleClass };

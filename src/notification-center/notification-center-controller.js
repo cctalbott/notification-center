@@ -1,4 +1,4 @@
-import { addClass, hasClass, parseHTML, toggleClass } from '../../javascript/utility.js';
+import { addClass, hasClass, parseHTML, removeEventListener, toggleClass } from '../../javascript/utility.js';
 
 class NotificationCenterController {
     pinned = false;
@@ -85,11 +85,15 @@ class NotificationCenterController {
                             notifyheadicomsg = 'i';
                             break;
                     }
-                    console.log(notifyheadico);
                     addClass(notifyheadico, notificonclass);
                     notifyheadico.innerText = notifyheadicomsg;
                     contentnotif.innerText = msg;
-                    window.setTimeout(this.removeItem(notiflistitem), 10000);
+                    const that = this;
+                    const closenotif = document.querySelectorAll('#box' + list_length.toString() + ' .notification .closenotif')[0];
+                    closenotif.addEventListener('click', () => {
+                        that.removeNotification(notiflistitem, list_length);
+                    });
+                    this.notifications[list_length].rmTimer = setTimeout(() => { that.removeItem(notiflistitem) }, 5000);
                 } else {
                     // We reached our target server, but it returned an error
                 }
@@ -169,11 +173,23 @@ class NotificationCenterController {
         getPanelSnippet(notificationBoxSnippetUrl);
     }
 
+    removeNotification(domEl, id) {
+        clearInterval(this.notifications[id].rmTimer);
+        this.notifications = this.notifications.filter((item, index) => {
+            return id !== index ? item : false;
+        });
+        console.log(this.notifications);
+        domEl.parentNode.removeChild(domEl);
+    }
+
     removeItem(itemDomEl) {
         if (hasClass(itemDomEl, 'fade-in')) {
             toggleClass(itemDomEl, 'fade-in');
             if (!hasClass(itemDomEl, 'fade-out')) {
                 addClass(itemDomEl, 'fade-out');
+                setTimeout(() => {
+                    itemDomEl.parentNode.removeChild(itemDomEl);
+                }, 2001);
             }
         }
     }

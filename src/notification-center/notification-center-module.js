@@ -1,14 +1,14 @@
 import NotificationCenterController from './notification-center-controller.js';
 import { hasClass, parseHTML, ready, toggleClass } from '../../javascript/utility.js';
 
+const notiflistHTML = parseHTML(`<ul class="notificationul indNotifs"></ul>`)[0];
+const bodyDomEl = document.querySelectorAll('body')[0];
+bodyDomEl.appendChild(notiflistHTML);
+
 export const notificationCenter = new NotificationCenterController();
 const hostRoot = window.location.protocol + '//' + window.location.host + '/' + window.location.pathname + '/../';
 const notificationPanelSnippetUrl = hostRoot + '/src/notification-center/notificationcenterpanel.html';
 const moduleName = 'notification-center-module';
-
-ready(() => {
-    getSnippet(notificationPanelSnippetUrl, moduleName);
-});
 
 const getSnippet = (reqUrl, moduleName) => {
     const request = new XMLHttpRequest();
@@ -28,10 +28,6 @@ const getSnippet = (reqUrl, moduleName) => {
             closePanelDom.addEventListener('click', notificationCenter.closeNotificationCenterPanel);
             const pinPanelDom = document.querySelectorAll('#notificationcenterpanel .panel-heading .panel-title a.closenotif:last-child')[0];
             pinPanelDom.addEventListener('click', notificationCenter.togglePinned);
-
-            const notiflistHTML = parseHTML(`<ul class="notificationul indNotifs"></ul>`)[0];
-            const bodyDomEl = document.querySelectorAll('body')[0];
-            bodyDomEl.appendChild(notiflistHTML);
         } else {
             // We reached our target server, but it returned an error
 
@@ -45,6 +41,8 @@ const getSnippet = (reqUrl, moduleName) => {
 
     request.send();
 }
+
+getSnippet(notificationPanelSnippetUrl, moduleName);
 
 const openNotificationCenterPanel = () => {
     const panel = document.querySelectorAll('#notificationcenterpanel')[0];

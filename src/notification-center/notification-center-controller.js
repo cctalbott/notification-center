@@ -1,4 +1,4 @@
-import { addClass, hasClass, parseHTML, ready, removeEventListener, toggleClass } from '../../javascript/utility.js';
+import { addClass, elementReady, hasClass, parseHTML, ready, removeEventListener, toggleClass } from '../../javascript/utility.js';
 
 class NotificationCenterController {
     pinned = false;
@@ -70,7 +70,7 @@ class NotificationCenterController {
                     const that = this;
                     const closenotif = document.querySelectorAll('#box' + saltedTimestamp + ' .notification .closenotif')[0];
                     closenotif.addEventListener('click', () => {
-                        that.removeNotification(notiflistitemById, saltedTimestamp);
+                        that.removeNotification(saltedTimestamp);
                     });
                     const currentNotification = this.notifications.filter((item) => {
                         return item.id === saltedTimestamp;
@@ -97,49 +97,55 @@ class NotificationCenterController {
                 if (request.status >= 200 && request.status < 400) {
                     // Success!
                     const resp = parseHTML(request.responseText)[0];
-                    const panel = document.querySelectorAll('#notificationcenterpanel')[0];
-                    panel.appendChild(resp);
-                    const list_length = document.querySelectorAll('.centerlist').length - 1;
-                    const centerlist = document.querySelectorAll('.centerlist')[list_length];
-                    // addClass(centerlist, 'item' + saltedTimestamp);
-                    centerlist.setAttribute('id', 'item' + saltedTimestamp);
-                    const centerlistById = document.querySelectorAll('#item' + saltedTimestamp)[0];
-                    let centerlistclass;
-                    let notifyclass;
-                    let notifyheadico;
-                    const notifytypemsg = type;
-                    switch (type) {
-                        case 'success':
-                            centerlistclass = 'centersuccess';
-                            notifyclass = 'notify-success';
-                            notifyheadico = 's';
-                            break;
-                        case 'error':
-                            centerlistclass = 'centererror';
-                            notifyclass = 'notify-error';
-                            notifyheadico = 'e';
-                            break;
-                        case 'warning':
-                            centerlistclass = 'centerwarning';
-                            notifyclass = 'notify-warning';
-                            notifyheadico = 'w';
-                            break;
-                        default:
-                            centerlistclass = 'centerinfo';
-                            notifyclass = 'notify-info';
-                            notifyheadico = 'i';
-                            break;
-                    }
-                    addClass(centerlistById, centerlistclass);
-                    const centerlistHTML = parseHTML(`
-                        <div class="` + notifyclass + `">
-                            <span class="notify-headico">` + notifyheadico + `</span>` + notifytypemsg + `
-                        </div>`)[0];
-                    centerlistById.appendChild(centerlistHTML);
-                    centerlistById.insertBefore(centerlistHTML, centerlistById.firstChild);
-                    const notifHTML = `<div class="closenotif">x</div>` + msg + `<br />`;
-                    const notifcenterbox = document.querySelectorAll('#item' + saltedTimestamp + ' ul li .notifcenterbox')[0];
-                    notifcenterbox.innerHTML = notifHTML;
+                    elementReady(() => {
+                        const panel = document.querySelectorAll('#notificationcenterpanel')[0];
+                        panel.appendChild(resp);
+                        const list_length = document.querySelectorAll('.centerlist').length - 1;
+                        const centerlist = document.querySelectorAll('.centerlist')[list_length];
+                        centerlist.setAttribute('id', 'item' + saltedTimestamp);
+                        const centerlistById = document.querySelectorAll('#item' + saltedTimestamp)[0];
+                        let centerlistclass;
+                        let notifyclass;
+                        let notifyheadico;
+                        const notifytypemsg = type;
+                        switch (type) {
+                            case 'success':
+                                centerlistclass = 'centersuccess';
+                                notifyclass = 'notify-success';
+                                notifyheadico = 's';
+                                break;
+                            case 'error':
+                                centerlistclass = 'centererror';
+                                notifyclass = 'notify-error';
+                                notifyheadico = 'e';
+                                break;
+                            case 'warning':
+                                centerlistclass = 'centerwarning';
+                                notifyclass = 'notify-warning';
+                                notifyheadico = 'w';
+                                break;
+                            default:
+                                centerlistclass = 'centerinfo';
+                                notifyclass = 'notify-info';
+                                notifyheadico = 'i';
+                                break;
+                        }
+                        addClass(centerlistById, centerlistclass);
+                        const centerlistHTML = parseHTML(`
+                            <div class="` + notifyclass + `">
+                                <span class="notify-headico">` + notifyheadico + `</span>` + notifytypemsg + `
+                            </div>`)[0];
+                        centerlistById.appendChild(centerlistHTML);
+                        centerlistById.insertBefore(centerlistHTML, centerlistById.firstChild);
+                        const notifHTML = `<div class="closenotif">x</div>` + msg + `<br />`;
+                        const notifcenterbox = document.querySelectorAll('#item' + saltedTimestamp + ' ul li .notifcenterbox')[0];
+                        notifcenterbox.innerHTML = notifHTML;
+                        const that = this;
+                        const closenotif = document.querySelectorAll('#item' + saltedTimestamp + ' ul li .notifcenterbox .closenotif')[0];
+                        closenotif.addEventListener('click', () => {
+                            that.removeNotification(saltedTimestamp);
+                        });
+                    }, '#notificationcenterpanel');
                 } else {
                     // We reached our target server, but it returned an error
                 }
@@ -201,7 +207,7 @@ class NotificationCenterController {
         }
     }
 
-    removeNotification(domEl, id) {
+    removeNotification(id) {
         const selNotif = this.notifications.filter((item) => {
             return item.id === id;
         })[0];
@@ -209,7 +215,8 @@ class NotificationCenterController {
         this.notifications = this.notifications.filter((item, index) => {
             return id !== item.id;
         });
-        domEl.parentNode.removeChild(domEl);
+        const domEl = document.querySelectorAll('#box' + id)[0];
+        if (domEl) { domEl.parentNode.removeChild(domEl); }
         const panelDomEl = document.querySelectorAll('#item' + id)[0];
         panelDomEl.parentNode.removeChild(panelDomEl);
     }

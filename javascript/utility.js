@@ -15,6 +15,16 @@ const addClass = (el, className) => {
     }
 }
 
+const elementReady = (fn, sel) => {
+    if (document.querySelectorAll(sel)[0]) {
+        fn();
+    } else {
+        setTimeout(() => {
+            elementReady(fn, sel);
+        }, 500);
+    }
+}
+
 const hasClass = (el, className) => {
     let result = false;
 
@@ -66,4 +76,4 @@ const toggleClass = (el, className) => {
     }
 }
 
-export { addClass, hasClass, parseHTML, ready, removeEventListener, toggleClass };
+export { addClass, elementReady, hasClass, parseHTML, ready, removeEventListener, toggleClass };

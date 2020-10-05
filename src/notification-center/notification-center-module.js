@@ -1,14 +1,15 @@
 import NotificationCenterController from './notification-center-controller.js';
-import { hasClass, ready, toggleClass } from '../../javascript/utility.js';
+import { hasClass, parseHTML, ready, toggleClass } from '../../javascript/utility.js';
 
-export const notificationCenter = new NotificationCenterController();
+const notiflistHTML = parseHTML(`<ul class="notificationul indNotifs"></ul>`)[0];
+const bodyDomEl = document.querySelectorAll('body')[0];
+bodyDomEl.appendChild(notiflistHTML);
+
+// export const notificationCenter = new NotificationCenterController();
+const notificationCenter = new NotificationCenterController();
 const hostRoot = window.location.protocol + '//' + window.location.host + '/' + window.location.pathname + '/../';
 const notificationPanelSnippetUrl = hostRoot + '/src/notification-center/notificationcenterpanel.html';
 const moduleName = 'notification-center-module';
-
-ready(() => {
-    getSnippet(notificationPanelSnippetUrl, moduleName);
-});
 
 const getSnippet = (reqUrl, moduleName) => {
     const request = new XMLHttpRequest();
@@ -42,6 +43,8 @@ const getSnippet = (reqUrl, moduleName) => {
     request.send();
 }
 
+getSnippet(notificationPanelSnippetUrl, moduleName);
+
 const openNotificationCenterPanel = () => {
     const panel = document.querySelectorAll('#notificationcenterpanel')[0];
     const bg = document.querySelectorAll('#notificationcenterbg')[0];
@@ -57,3 +60,5 @@ const openNotificationCenterPanel = () => {
         }
     }
 }
+
+export { notificationCenter };

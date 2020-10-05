@@ -15,6 +15,16 @@ const addClass = (el, className) => {
     }
 }
 
+const elementReady = (fn, sel) => {
+    if (document.querySelectorAll(sel)[0]) {
+        fn();
+    } else {
+        setTimeout(() => {
+            elementReady(fn, sel);
+        }, 500);
+    }
+}
+
 const hasClass = (el, className) => {
     let result = false;
 
@@ -41,6 +51,14 @@ const ready = (fn) => {
     }
 }
 
+const removeEventListener = (el, eventName, handler) => {
+    if (el.removeEventListener) {
+        el.removeEventListener(eventName, handler);
+    } else {
+        el.detachEvent('on' + eventName, handler);
+    }
+}
+
 const toggleClass = (el, className) => {
     if (el.classList) {
         el.classList.toggle(className);
@@ -58,4 +76,4 @@ const toggleClass = (el, className) => {
     }
 }
 
-export { addClass, hasClass, parseHTML, ready, toggleClass };
+export { addClass, elementReady, hasClass, parseHTML, ready, removeEventListener, toggleClass };

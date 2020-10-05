@@ -22,8 +22,8 @@
 }
 .notificationul li {
     margin: 20px;
-    position: absolute;
-    right: -450px;
+    /*position: absolute;
+    right: -450px;*/
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;

@@ -9,6 +9,7 @@ module.exports = {
         notificationCenterModule: './src/notification-center/notification-center-module.js',
         notificationCenterController: './src/notification-center/notification-center-controller.js',
         notificationPanelModule: './src/notification-center/notification-panel-module.js',
+        notificationPanelItemModule: './src/notification-center/notification-panel-item-module.js',
         site: './javascript/site.js',
         utility: './javascript/utility.js',
     },

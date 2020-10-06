@@ -5,7 +5,6 @@ const notiflistHTML = parseHTML(`<ul class="notificationul indNotifs"></ul>`)[0]
 const bodyDomEl = document.querySelectorAll('body')[0];
 bodyDomEl.appendChild(notiflistHTML);
 
-// export const notificationCenter = new NotificationCenterController();
 const notificationCenter = new NotificationCenterController();
 const hostRoot = window.location.protocol + '//' + window.location.host + '/' + window.location.pathname + '/../';
 const notificationPanelSnippetUrl = hostRoot + '/src/notification-center/notificationcenterpanel.html';

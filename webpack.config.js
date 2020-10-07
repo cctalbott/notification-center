@@ -10,6 +10,7 @@ module.exports = {
         notificationCenterController: './src/notification-center/notification-center-controller.js',
         site: './javascript/site.js',
         utility: './javascript/utility.js',
+        myElement: './src/lit/my-element.ts',
     },
     plugins: [
         new CleanWebpackPlugin(),
@@ -20,10 +21,16 @@ module.exports = {
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, 'dist'),
-
     },
     module: {
         rules: [
+            {
+                test: /\.tsx?$/,
+                exclude: /(node_modules)/,
+                use: {
+                    loader: 'ts-loader',
+                },
+            },
             {
                 test: /\.(js)$/,
                 exclude: /(node_modules)/,
@@ -48,5 +55,9 @@ module.exports = {
                 }
             }
         ]
-    }
+    },
+    resolve: {
+        // Add ".ts" and ".tsx" as resolvable extensions.
+        extensions: [".ts", ".tsx", ".js"],
+    },
 };

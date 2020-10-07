@@ -1,44 +1,52 @@
 import { parseHTML } from '../../javascript/utility.js';
 
 class NotificationPanelItem extends HTMLElement {
+    static get properties() {
+        return {
+            id: { type: Number },
+            type: { type: String },
+            msg: { type: String },
+        }
+    }
+
     constructor() {
         super();
+        this.id = this.getAttribute('id');
+        this.type = this.getAttribute('type');
+        this.msg = this.getAttribute('msg');
     }
 
     connectedCallback() {
         console.log('NotificationPanelItem connected');
 
-        // this._getTemplate.bind(this);
         this.attachShadow({ mode: 'open' });
-        // this.shadowRoot.innerHTML = this._getTemplate;
-
-        const id = this.getAttribute('id');
-        const type = this.getAttribute('type');
-        const msg = this.getAttribute('msg');
-        const typeAbbrv = this.getTypeAbbrv();
-
-        this.shadowRoot.innerHTML = `
-            <div id="item${id}" class="centerlist center${type}">
-                <div class="notify-${type}">
-                    <span class="notify-headico">${typeAbbrv}</span>${type}
-                </div>
-                <ul>
-                    <li>
-                        <div class="notifcenterbox">
-                            <div class="closenotif">x</div>
-                            ${msg}
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        `;
+        this.shadowRoot.innerHTML = this._getTemplate();
     }
 
     disconnectedCallback() {
         console.log('NotificationPanelItem disconnected');
     }
 
-    getTypeAbbrv = () => {
+    _getTemplate = () => {
+        const template = `
+            <div id="item${this.id}" class="centerlist center${this.type}">
+                <div class="notify-${this.type}">
+                    <span class="notify-headico">${this._getTypeAbbrv()}</span>${this.type}
+                </div>
+                <ul>
+                    <li>
+                        <div class="notifcenterbox">
+                            <div class="closenotif">x</div>
+                            ${this.msg}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        `;
+        return template;
+    };
+
+    _getTypeAbbrv = () => {
         let abbrv = '';
 
         switch(this.type) {
@@ -60,30 +68,6 @@ class NotificationPanelItem extends HTMLElement {
         }
 
         return abbrv;
-    };
-
-    _getTemplate = () => {
-        const id = this.getAttribute('id');
-        const type = this.getAttribute('type');
-        const msg = this.getAttribute('msg');
-
-        const template = `
-            <div id="item${id}" class="centerlist center${type}">
-                <div class="notify-${type}">
-                    <span class="notify-headico">${this.getTypeAbbrv}</span>${type}
-                </div>
-                <ul>
-                    <li>
-                        <div class="notifcenterbox">
-                            <div class="closenotif">x</div>
-                            ${msg}
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        `;
-        // console.log(template);
-        return template;
     };
 }
 

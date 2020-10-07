@@ -1,4 +1,5 @@
 import { hasClass, parseHTML, removeEventListener, toggleClass } from '../../javascript/utility.js';
+import './notification-panel-item-module.js';
 
 class NotificationPanel extends HTMLElement {
     pinned = false;
@@ -15,22 +16,22 @@ class NotificationPanel extends HTMLElement {
         this.shadowRoot.innerHTML = this._getTemplate();
         const notifIcon = document.querySelector('#notificationcentericon');
         const that = this;
-        this.shadowRoot.querySelector('#notificationcenterbg').addEventListener('click', that.closeNotificationCenterPanel);
-        notifIcon.addEventListener('click', that.openNotificationCenterPanel);
+        this.shadowRoot.querySelector('#notificationcenterbg').addEventListener('click', that._closeNotificationCenterPanel);
+        notifIcon.addEventListener('click', that._openNotificationCenterPanel);
         const closePanelDom = this.shadowRoot.querySelectorAll('#notificationcenterpanel .panel-heading .panel-title a.closenotif:first-child')[0];
-        closePanelDom.addEventListener('click', that.closeNotificationCenterPanel);
+        closePanelDom.addEventListener('click', that._closeNotificationCenterPanel);
         const pinPanelDom = this.shadowRoot.querySelectorAll('#notificationcenterpanel .panel-heading .panel-title a.closenotif:last-child')[0];
-        pinPanelDom.addEventListener('click', that.togglePinned);
+        pinPanelDom.addEventListener('click', that._togglePinned);
     }
 
     disconnectedCallback() {
         const that = this;
         const notifIcon = document.querySelector('#notificationcentericon');
-        notifIcon.removeEventListener(notifIcon, 'click', that.openNotificationCenterPanel);
+        notifIcon.removeEventListener(notifIcon, 'click', that._openNotificationCenterPanel);
         const closePanelDom = this.shadowRoot.querySelectorAll('#notificationcenterpanel .panel-heading .panel-title a.closenotif:first-child')[0];
-        closePanelDom.removeEventListener(closePanelDom, 'click', that.closeNotificationCenterPanel);
+        closePanelDom.removeEventListener(closePanelDom, 'click', that._closeNotificationCenterPanel);
         const pinPanelDom = this.shadowRoot.querySelectorAll('#notificationcenterpanel .panel-heading .panel-title a.closenotif:last-child')[0];
-        pinPanelDom.removeEventListener(pinPanelDom, 'click', that.togglePinned);
+        pinPanelDom.removeEventListener(pinPanelDom, 'click', that._togglePinned);
         console.log('NotificationPanel disconnected');
     }
 
@@ -54,7 +55,7 @@ class NotificationPanel extends HTMLElement {
         `)[0]);
     };
 
-    closeNotificationCenterPanel = () => {
+    _closeNotificationCenterPanel = () => {
         const panel = this.shadowRoot.querySelectorAll('#notificationcenterpanel')[0];
         const bg = this.shadowRoot.querySelectorAll('#notificationcenterbg')[0];
 
@@ -69,7 +70,7 @@ class NotificationPanel extends HTMLElement {
         }
     };
 
-    openNotificationCenterPanel = () => {
+    _openNotificationCenterPanel = () => {
         const panel = this.shadowRoot.querySelector('#notificationcenterpanel');
         const bg = this.shadowRoot.querySelector('#notificationcenterbg');
         if (hasClass(panel, 'hide')) {
@@ -85,7 +86,7 @@ class NotificationPanel extends HTMLElement {
         }
     };
 
-    togglePinned = () => {
+    _togglePinned = () => {
         this.pinned = !this.pinned ? true : false;
         const bg = this.shadowRoot.querySelectorAll('#notificationcenterbg')[0];
 

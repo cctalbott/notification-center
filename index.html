@@ -5,11 +5,22 @@
     <title>Notification Center</title>
     <meta name="description" content="TTU UI Notification Center" />
     <meta name="author" content="TTUS" />
-    <link rel="shortcut icon" href="images/favicon.ico" />
-    <!--<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <!--<link rel="shortcut icon" href="images/favicon.ico" />
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="styles/main.css" />
     <link rel="stylesheet" href="styles/notificationcenter.css?v=1.0.3" />
     <link rel="stylesheet" href="styles/animations.css?v=1.0.3" />-->
+    <style>
+        .notificationul.indNotifs {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            position: fixed;
+            top: 60px;
+            right: 0;
+            z-index: 1101;
+        }
+    </style>
     <script src="./node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
     <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
 </head>
@@ -18,12 +29,40 @@
         <a id="notificationcentericon" href="#">
             <img src="images/bulb_wht_32.png" class="notify-ico" />
         </a>
-    </div>-->
-    <!--<notification-center-module></notification-center-module>-->
-    <script type="module" src="dist/myElement.js"></script>
-    <my-element></my-element>
+    </div>
+    <notification-center-module></notification-center-module>-->
+    <!--<script type="module" src="dist/myElement.js"></script>
+    <my-element></my-element>-->
+    <script type="module" src="dist/notifList.js"></script>
+    <script type="module" src="dist/notifListItem.js"></script>
+    <script type="module" src="dist/notifListItemIcon.js"></script>
+    <script type="module" src="dist/notifListItemMsg.js"></script>
+    <notif-list>
+        <notif-list-item slot="item">
+            <notif-list-item-icon 
+                slot="icon"
+                status="success">
+            </notif-list-item-icon>
+            <notif-list-item-msg 
+                slot="message"
+                msg="A success notification.">
+            </notif-list-item-msg>
+        </notif-list-item>
+    </notif-list>
+    <!--<ul class="notificationul indNotifs">
+        <notif-list-item>
+            <notif-list-item-icon 
+                slot="icon"
+                status="success">
+            </notif-list-item-icon>
+            <notif-list-item-msg 
+                slot="message"
+                msg="A success notification.">
+            </notif-list-item-msg>
+        </notif-list-item>
+    </ul>-->
 
-    <!--<script type="module" src="dist/notificationCenterModule.js"></script>-->
-    <!--<script src="dist/site.js"></script>-->
+    <!--<script type="module" src="dist/notificationCenterModule.js"></script>
+    <script src="dist/site.js"></script>-->
 </body>
 </html>

@@ -11,6 +11,10 @@ module.exports = {
         site: './javascript/site.js',
         utility: './javascript/utility.js',
         myElement: './src/lit/my-element.ts',
+        notifList: './src/lit/notif-list.ts',
+        notifListItem: './src/lit/notif-list-item.ts',
+        notifListItemMsg: './src/lit/notif-list-item-msg.ts',
+        notifListItemIcon: './src/lit/notif-list-item-icon.ts',
     },
     plugins: [
         new CleanWebpackPlugin(),
